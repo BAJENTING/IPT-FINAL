@@ -1,4 +1,13 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
-@Component({ templateUrl: 'overview.component.html' })
-export class OverviewComponent { }
+@Component({
+  selector: 'app-overview',
+  templateUrl: './overview.component.html',
+  standalone: true,
+  imports: [CommonModule, RouterModule]
+})
+export class OverviewComponent {
+  constructor() { }
+}

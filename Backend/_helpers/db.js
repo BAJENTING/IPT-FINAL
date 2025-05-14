@@ -28,10 +28,14 @@ async function initialize() {
         // Initialize models
         db.Account = require('../accounts/account.model')(sequelize);
         db.RefreshToken = require('../accounts/refresh-token.model.js')(sequelize);
+        db.Employee = require('../employees/employee.model')(sequelize, Sequelize);
+        db.Department = require('../departments/department.model')(sequelize, Sequelize);
 
         // Define relationships
         db.Account.hasMany(db.RefreshToken, { onDelete: 'CASCADE' });
         db.RefreshToken.belongsTo(db.Account);
+        db.Employee.belongsTo(db.Account, { foreignKey: 'userId', as: 'user' });
+        db.Employee.belongsTo(db.Department, { foreignKey: 'departmentId', as: 'department' });
 
         // Sync models
         await sequelize.sync({ alter: true });
