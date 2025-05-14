@@ -21,7 +21,10 @@ async function create(req, res, next) {
 async function getAll(req, res, next) {
     try {
         const employees = await db.Employee.findAll({
-            include: [{ model: db.User}, { model: db.Department }]
+            include: [
+                { model: db.Account, as: 'user' },
+                { model: db.Department, as: 'department' }
+            ]
         });
         res.json(employees);
     } catch (err) { next(err); }
@@ -30,7 +33,10 @@ async function getAll(req, res, next) {
 async function getById(req, res, next) {
     try {
         const employee = await db.Employee.findByPk(req.params.id, {
-            include: [{ model: db.User}, { model: db.Department }]
+            include: [
+                { model: db.Account, as: 'user' },
+                { model: db.Department, as: 'department' }
+            ]
         });
         if (!employee) throw new Error('Employee not found');
         res.json(employee);
